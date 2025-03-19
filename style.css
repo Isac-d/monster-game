@@ -1,5 +1,17 @@
 * {
   font-family: "Press Start 2P", system-ui;
+  padding: 0;
+  margin: 0;
+  z-index: 999;
+}
+
+.overlay {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.52);
+  position: absolute;
+  z-index: 1000;
 }
 
 body {
@@ -10,6 +22,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 100vh;
 }
 
 img {
@@ -31,7 +44,7 @@ img {
 .stat-container {
   display: flex;
   flex-direction: column;
-  background: rgba(253, 253, 253, 0.5882352941);
+  background: rgba(253, 253, 253, 0.7294117647);
   border: 1px solid black;
   width: 15rem;
   padding: 30px;
@@ -64,6 +77,9 @@ img {
   border-radius: 50%;
   border: 2px solid rgba(0, 0, 0, 0.2745098039);
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button:hover {
@@ -93,29 +109,37 @@ button:hover {
   width: 300px;
   background: rgba(243, 243, 243, 0.4392156863);
   border: 1px solid black;
+  padding: 20px;
 }
 
 .add-new {
   background: rgba(243, 243, 243, 0.4392156863);
   border: 1px solid black;
+  border-radius: 4px;
   padding: 20px 0;
   cursor: pointer;
 }
 
 .div-add-new-monster-card {
+  z-index: 1001;
   height: 300px;
+  background: #F3F3F3;
   border: 1px solid black;
   padding: 50px;
+  border-radius: 4px;
+  position: absolute;
+  top: 20%;
   display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
 }
 .div-add-new-monster-card input {
-  height: 25px;
+  height: 40px;
   border: 1px solid black;
 }
 .div-add-new-monster-card select {
-  height: 25px;
+  height: 40px;
   border: 1px solid black;
   width: 284px;
 }
@@ -123,10 +147,20 @@ button:hover {
   text-align: center;
 }
 
+.name-type {
+  margin-top: 70px;
+}
+
+.type-option {
+  height: 40px;
+  font-size: 13px;
+}
+
 .add-btn {
   background: rgba(243, 243, 243, 0.4392156863);
   border: 1px solid black;
   padding: 20px 0;
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -142,4 +176,36 @@ select#monster-name:focus {
 
 select#monster-name:hover {
   border-bottom: 1px solid black;
+}
+
+option {
+  font-size: 30px;
+}
+
+.log {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: scroll;
+}
+
+.log-item {
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.log-feed {
+  color: #E63946;
+}
+
+.log-play {
+  color: #52B788;
+}
+
+.log-rest {
+  color: #FFD166;
+}
+
+.log-ranaway {
+  color: #780000;
 }/*# sourceMappingURL=style.css.map */
