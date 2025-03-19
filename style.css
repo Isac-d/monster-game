@@ -24,6 +24,10 @@ img {
   height: fit-content;
 }
 
+.no-monster {
+  font-size: 32px;
+}
+
 .stat-container {
   display: flex;
   flex-direction: column;
@@ -91,4 +95,46 @@ button:hover {
   border: 1px solid black;
   padding: 20px 0;
   cursor: pointer;
+}
+
+.div-add-new-monster-card {
+  height: 300px;
+  border: 1px solid black;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.div-add-new-monster-card input {
+  height: 25px;
+  border: 1px solid black;
+}
+.div-add-new-monster-card select {
+  height: 25px;
+  border: 1px solid black;
+  width: 284px;
+}
+.div-add-new-monster-card h3 {
+  text-align: center;
+}
+
+.add-btn {
+  background: rgba(243, 243, 243, 0.4392156863);
+  border: 1px solid black;
+  padding: 20px 0;
+  cursor: pointer;
+}
+
+select#monster-name {
+  border: none;
+  font-size: 42px;
+  min-width: 400px;
+}
+
+select#monster-name:focus {
+  outline: none;
+}
+
+select#monster-name:hover {
+  border-bottom: 1px solid black;
 }/*# sourceMappingURL=style.css.map */

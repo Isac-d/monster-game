@@ -12,33 +12,53 @@
 </head>
 <body>
     <main>
+        <div class="div-add-new-monster-card">
+            <h3>ADD NEW MONSTER</h3>
+            <div class="input-container">
+                <label for="name">NAME:</label>
+                <input id="name" type="text">
+            </div>
+            <div class="input-container">
+                <label for="name">TYPE:</label>
+                <select id="type">
+                    <option value="Dragon">Dragon</option>
+                    <option value="Golem">Golem</option>
+                    <option value="Troll">Troll</option>
+                    <option value="Unknown">Unknown</option>
+                  </select>
+            </div>
+            <button class="add-btn">ADD NEW MONSTER</button>
+        </div>
         <div class="name-type">
-            <h1>Name</h1>
-            <h3 class="type">type</h3>
+            <h3 class="no-monster">No monster added</h3>
+            <select name="name" id="monster-name">
+              
+            </select>
+            <h3 class="monster-type">type</h3>
         </div>
         <div class="image-container">
-            <img src="/images/golem.png" alt="">
+            <img class="monster-image" src="/images/golem.png" alt="">
             <div class="stat-container">
                 <div class="stat">
                     <div class="stat-text">
                         <i class="fa-solid fa-bolt fa-xl"></i>
                         Energy:
                     </div>
-                    <div class="stat-number">40</div>
+                    <div class="stat-number energy">40</div>
                 </div>
                 <div class="stat">
                     <div class="stat-text">
                         <i class="fa-solid fa-drumstick-bite fa-xl"></i>
                         Hunger:
                     </div>
-                    <div class="stat-number">50</div>
+                    <div class="stat-number hunger">50</div>
                 </div>
                 <div class="stat">
                     <div class="stat-text">
                         <i class="fa-solid fa-face-grin-hearts fa-xl"></i>
                         Happiness:
                     </div>
-                    <div class="stat-number">50</div>
+                    <div class="stat-number happiness">50</div>
                 </div>
             </div>
         </div>
