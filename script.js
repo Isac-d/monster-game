@@ -167,6 +167,7 @@ const addNewMonster = () => {
   activeMonster = monsterList[monsterList.length - 1];
 
   inputValue.value = ''; 
+  isOpen = false;
 
   renderMonsterList();
   renderMonster();
