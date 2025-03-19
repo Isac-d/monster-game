@@ -1,0 +1,94 @@
+* {
+  font-family: "Press Start 2P", system-ui;
+}
+
+body {
+  max-height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  height: 700px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.stat-container {
+  display: flex;
+  flex-direction: column;
+  background: rgba(253, 253, 253, 0.5882352941);
+  border: 1px solid black;
+  width: 15rem;
+  padding: 30px;
+  height: 180px;
+  gap: 50px;
+  border-radius: 3px;
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+}
+
+.stat-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-container {
+  position: relative;
+}
+
+.monster-btn {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2745098039);
+  cursor: pointer;
+}
+
+button:hover {
+  filter: opacity(70%);
+}
+
+.button-container {
+  display: flex;
+  width: 800px;
+  height: 150px;
+  justify-content: space-around;
+}
+
+.add-log-container {
+  float: right;
+  margin-right: 90px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  gap: 10px;
+}
+
+.log {
+  height: 300px;
+  width: 300px;
+  background: rgba(243, 243, 243, 0.4392156863);
+  border: 1px solid black;
+}
+
+.add-new {
+  background: rgba(243, 243, 243, 0.4392156863);
+  border: 1px solid black;
+  padding: 20px 0;
+  cursor: pointer;
+}/*# sourceMappingURL=style.css.map */
