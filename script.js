@@ -118,16 +118,16 @@ const renderMonster = () => {
   let type = activeMonster.monsterType.toLowerCase();
   if (monsterList.length == 0) {
     monsterImage.src =
-      "/images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif";
+      "./images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif";
   } else {
     monsterImage.src =
       type === "dragon"
-        ? "/images/dragon.png"
+        ? "./images/dragon.png"
         : type === "golem"
-        ? "/images/golem.png"
+        ? "./images/golem.png"
         : type === "troll"
-        ? "/images/troll.png"
-        : "/images/unknown.png";
+        ? "./images/troll.png"
+        : "./images/unknown.png";
   }
 };
 
@@ -141,7 +141,7 @@ const renderMonsterList = () => {
       button.style.cursor = "default";
     });
     monsterImage.src =
-      "/images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif";
+      "./images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif";
     monsterType.style.display = "none";
     monsterSelect.style.display = "none";
     statDiv.style.display = "none";
