@@ -3,36 +3,37 @@ let startValue = 50;
 let monsterList = [];
 let logArray = [];
 let activeMonster;
-let isOpen = false
+let isOpen = false;
 
 // DOM
 const energyButton = document.querySelector(".energy-btn");
 const playButton = document.querySelector(".play-btn");
 const feedButton = document.querySelector(".feed-btn");
-const addCard = document.querySelector('.div-add-new-monster-card')
-const overlay = document.querySelector('.overlay')
-const addNewButton = document.querySelector('.add-new')
+const addCard = document.querySelector(".div-add-new-monster-card");
+const overlay = document.querySelector(".overlay");
+const addNewButton = document.querySelector(".add-new");
 const addbutton = document.querySelector(".add-btn");
 const monsterName = document.getElementById("monster-name");
 const monsterType = document.querySelector(".monster-type");
 const monsterEnergy = document.querySelector(".energy");
 const monsterHunger = document.querySelector(".hunger");
 const monsterHappiness = document.querySelector(".happiness");
-const monsterImage = document.querySelector('.monster-image')
+const monsterImage = document.querySelector(".monster-image");
 const monsterSelect = document.getElementById("monster-name");
 const noMonsterText = document.querySelector(".no-monster");
 const statDiv = document.querySelector(".stat-container");
-const activityButton = document.querySelectorAll('.monster-btn')
+const activityButton = document.querySelectorAll(".monster-btn");
 const logDiv = document.querySelector(".log");
 
 // monster Class
 function Monster(name, monsterType) {
+  // declaring object keys and values
   this.name = name;
   this.monsterType = monsterType;
   this.energy = startValue;
   this.happiness = startValue;
   this.fullness = startValue;
-
+  // declaring methods
   this.feed = function () {
     if (this.fullness < 100) {
       this.fullness = Math.min(this.fullness + 30, 100);
@@ -71,31 +72,29 @@ function Monster(name, monsterType) {
   };
   this.statTimer = function () {
     if (this.interval) return;
-    
+
     this.interval = setInterval(() => {
-        if (this.fullness > 0 || this.energy > 0 || this.happiness > 0) {
-            this.fullness -= 15;
-            this.energy -= 15;
-            this.happiness -= 15;
-            renderMonster(); 
-        } else {
-            clearInterval(this.interval);
-            this.interval = null; 
-        }
+      if (this.fullness > 0 || this.energy > 0 || this.happiness > 0) {
+        this.fullness -= 15;
+        this.energy -= 15;
+        this.happiness -= 15;
+        renderMonster();
+      } else {
+        clearInterval(this.interval);
+        this.interval = null;
+      }
     }, 10000);
-};
-
+  };
 }
-
-
-// render monster
-const renderMonster = () => {
-
-  if (activeMonster.energy <= 0 || activeMonster.happiness <= 0 || activeMonster.fullness <= 0) {
+// delete monster
+const deleteMonster = () => {
+  if (
+    activeMonster.energy <= 0 ||
+    activeMonster.happiness <= 0 ||
+    activeMonster.fullness <= 0
+  ) {
     logArray.push(`${activeMonster.name} ran away!`);
-    
-    monsterList = monsterList.filter(monster => monster !== activeMonster);
-
+    monsterList = monsterList.filter((monster) => monster !== activeMonster);
     activeMonster = monsterList.length > 0 ? monsterList[0] : null;
 
     renderMonsterList();
@@ -103,52 +102,55 @@ const renderMonster = () => {
 
     if (!activeMonster) return;
   }
+};
 
-  activeMonster.statTimer()
+// render monster
+const renderMonster = () => {
+  deleteMonster();
+  activeMonster.statTimer();
 
-  monsterName.value = activeMonster.name
+  monsterName.value = activeMonster.name;
   monsterType.innerHTML = activeMonster.monsterType;
   monsterEnergy.innerHTML = activeMonster.energy;
   monsterHunger.innerHTML = activeMonster.fullness;
   monsterHappiness.innerHTML = activeMonster.happiness;
 
   let type = activeMonster.monsterType.toLowerCase();
-  if(monsterList.length == 0){
-    monsterImage.src = '/images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif'
-  }else{
+  if (monsterList.length == 0) {
     monsterImage.src =
-    type === "dragon"
-    ? "/images/dragon.png"
-    : type === "golem"
-    ? "/images/golem.png"
-    : type === "troll"
-    ? "/images/troll.png"
-    : "/images/unknown.png";
+      "/images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif";
+  } else {
+    monsterImage.src =
+      type === "dragon"
+        ? "/images/dragon.png"
+        : type === "golem"
+        ? "/images/golem.png"
+        : type === "troll"
+        ? "/images/troll.png"
+        : "/images/unknown.png";
   }
 };
 
 const renderMonsterList = () => {
-
   monsterSelect.innerHTML = "";
 
   if (monsterList.length === 0) {
-    activityButton.forEach(button => {
-      button.disabled = true
-      button.style.filter = 'opacity(50%)'
-      button.style.cursor = 'default'
+    activityButton.forEach((button) => {
+      button.disabled = true;
+      button.style.filter = "opacity(50%)";
+      button.style.cursor = "default";
     });
-    monsterImage.src = '/images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif';
+    monsterImage.src =
+      "/images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif";
     monsterType.style.display = "none";
     monsterSelect.style.display = "none";
     statDiv.style.display = "none";
     noMonsterText.style.display = "block";
-
   } else {
-
-      activityButton.forEach(button => {
-      button.disabled = false
-      button.style.filter = 'none'
-      button.style.cursor = 'pointer'
+    activityButton.forEach((button) => {
+      button.disabled = false;
+      button.style.filter = "none";
+      button.style.cursor = "pointer";
     });
     monsterType.style.display = "block";
     monsterSelect.style.display = "block";
@@ -166,14 +168,14 @@ const renderMonsterList = () => {
 
 // add new monster with constructor
 const addNewMonster = () => {
-  const inputValue = document.getElementById("name"); 
+  const inputValue = document.getElementById("name");
 
   if (monsterList.length > 3) {
     alert("stop");
     return;
   }
 
-  const monsterName = inputValue.value.trim(); 
+  const monsterName = inputValue.value.trim();
   const monsterType = document.getElementById("type").value;
 
   if (monsterName.length === 0) {
@@ -185,7 +187,7 @@ const addNewMonster = () => {
   monsterList.push(newMonster);
   activeMonster = monsterList[monsterList.length - 1];
 
-  inputValue.value = ''; 
+  inputValue.value = "";
   isOpen = false;
 
   renderMonsterList();
@@ -193,7 +195,6 @@ const addNewMonster = () => {
 
   addCard.style.display = "none";
   overlay.style.display = "none";
-
 };
 
 // change monster from list
@@ -213,9 +214,8 @@ const handleChangeMonster = () => {
 const renderLog = () => {
   logDiv.innerHTML = "";
 
-  const reversedArr = logArray.reverse()
+  const reversedArr = logArray.reverse();
   reversedArr.forEach((log) => {
-    
     const logItem = document.createElement("div");
     logItem.classList.add("log-item");
     logItem.innerHTML = log;
@@ -226,8 +226,8 @@ const renderLog = () => {
       logItem.classList.add("log-play");
     } else if (log.includes("nap")) {
       logItem.classList.add("log-rest");
-    } else if (log.includes("ran")){
-      logItem.classList.add('log-ranaway')
+    } else if (log.includes("ran")) {
+      logItem.classList.add("log-ranaway");
     }
 
     logDiv.appendChild(logItem);
@@ -235,23 +235,21 @@ const renderLog = () => {
 };
 // toggle add new monster popup
 const handleToggle = () => {
-  if(!isOpen){
-    addCard.style.display = 'flex'
-    overlay.style.display = 'block'
-  }else{
-    addCard.style.display = 'none'
-    overlay.style.display = 'none'
+  if (!isOpen) {
+    addCard.style.display = "flex";
+    overlay.style.display = "block";
+  } else {
+    addCard.style.display = "none";
+    overlay.style.display = "none";
   }
-isOpen = !isOpen
- 
-}
-
+  isOpen = !isOpen;
+};
 
 // Event listeners
-if(overlay){
-  overlay.addEventListener('click', handleToggle)
+if (overlay) {
+  overlay.addEventListener("click", handleToggle);
 }
-addNewButton.addEventListener('click', handleToggle)
+addNewButton.addEventListener("click", handleToggle);
 feedButton.addEventListener("click", () => activeMonster.feed());
 playButton.addEventListener("click", () => activeMonster.play());
 energyButton.addEventListener("click", () => activeMonster.rest());
@@ -261,4 +259,3 @@ document
   .addEventListener("change", handleChangeMonster);
 
 renderMonsterList();
-
