@@ -26,66 +26,59 @@ const activityButton = document.querySelectorAll(".monster-btn");
 const logDiv = document.querySelector(".log");
 
 // monster Class
-function Monster(name, monsterType) {
-  // declaring object keys and values
-  this.name = name;
-  this.monsterType = monsterType;
-  this.energy = startValue;
-  this.happiness = startValue;
-  this.fullness = startValue;
-  // declaring methods
-  this.feed = function () {
-    if (this.fullness < 100) {
-      this.fullness = Math.min(this.fullness + 30, 100);
-    }
-    if (this.happiness < 100) {
-      this.happiness = Math.min(this.happiness + 5, 100);
-    }
-    if (this.energy > 0) {
-      this.energy = Math.max(this.energy - 10, 0);
-    }
+class Monster {
+  constructor(name, monsterType) {
+    this.name = name;
+    this.monsterType = monsterType;
+    this.energy = 50;
+    this.happiness = 50;
+    this.fullness = 50;
+    this.interval = null;
+  }
 
+  feed() {
+    this.fullness = Math.min(this.fullness + 30, 100);
+    this.happiness = Math.min(this.happiness + 5, 100);
+    this.energy = Math.max(this.energy - 10, 0);
     logArray.push(`You gave ${this.name} some food!`);
     renderLog();
     renderMonster();
-  };
+  }
 
-  this.rest = function () {
+  rest() {
     this.fullness = Math.max(this.fullness - 10, 0);
     this.happiness = Math.max(this.happiness - 10, 0);
     this.energy = Math.min(this.energy + 40, 100);
-
     logArray.push(`${this.name} took a nap!`);
     renderLog();
     renderMonster();
-  };
-  this.play = function () {
+  }
+
+  play() {
     this.fullness = Math.max(this.fullness - 10, 0);
-
     this.happiness = Math.min(this.happiness + 30, 100);
-
     this.energy = Math.max(this.energy - 10, 0);
-
     logArray.push(`You played with ${this.name}!`);
     renderLog();
     renderMonster();
-  };
-  this.statTimer = function () {
-    if (this.interval) return;
+  }
 
+  statTimer() {
+    if (this.interval) return;
     this.interval = setInterval(() => {
       if (this.fullness > 0 || this.energy > 0 || this.happiness > 0) {
-        this.fullness -= 15;
-        this.energy -= 15;
-        this.happiness -= 15;
+        this.fullness = Math.max(this.fullness - 15, 0);
+        this.energy = Math.max(this.energy - 15, 0);
+        this.happiness = Math.max(this.happiness - 15, 0);
         renderMonster();
       } else {
         clearInterval(this.interval);
         this.interval = null;
       }
     }, 10000);
-  };
+  }
 }
+
 // delete monster
 const deleteMonster = () => {
   if (
