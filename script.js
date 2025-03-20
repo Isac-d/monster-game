@@ -1,18 +1,31 @@
+// variables
 let startValue = 50;
 let monsterList = [];
 let logArray = [];
 let activeMonster;
-
 let isOpen = false
 
+// DOM
 const energyButton = document.querySelector(".energy-btn");
 const playButton = document.querySelector(".play-btn");
 const feedButton = document.querySelector(".feed-btn");
 const addCard = document.querySelector('.div-add-new-monster-card')
 const overlay = document.querySelector('.overlay')
-
+const addNewButton = document.querySelector('.add-new')
 const addbutton = document.querySelector(".add-btn");
+const monsterName = document.getElementById("monster-name");
+const monsterType = document.querySelector(".monster-type");
+const monsterEnergy = document.querySelector(".energy");
+const monsterHunger = document.querySelector(".hunger");
+const monsterHappiness = document.querySelector(".happiness");
+const monsterImage = document.querySelector('.monster-image')
+const monsterSelect = document.getElementById("monster-name");
+const noMonsterText = document.querySelector(".no-monster");
+const statDiv = document.querySelector(".stat-container");
+const activityButton = document.querySelectorAll('.monster-btn')
+const logDiv = document.querySelector(".log");
 
+// monster Class
 function Monster(name, monsterType) {
   this.name = name;
   this.monsterType = monsterType;
@@ -56,11 +69,29 @@ function Monster(name, monsterType) {
     renderLog();
     renderMonster();
   };
+  this.statTimer = function () {
+    if (this.interval) return;
+    
+    this.interval = setInterval(() => {
+        if (this.fullness > 0 || this.energy > 0 || this.happiness > 0) {
+            this.fullness -= 15;
+            this.energy -= 15;
+            this.happiness -= 15;
+            renderMonster(); 
+        } else {
+            clearInterval(this.interval);
+            this.interval = null; 
+        }
+    }, 10000);
+};
+
 }
 
+
+// render monster
 const renderMonster = () => {
 
-  if (activeMonster.energy === 0 || activeMonster.happiness === 0 || activeMonster.fullness === 0) {
+  if (activeMonster.energy <= 0 || activeMonster.happiness <= 0 || activeMonster.fullness <= 0) {
     logArray.push(`${activeMonster.name} ran away!`);
     
     monsterList = monsterList.filter(monster => monster !== activeMonster);
@@ -73,14 +104,7 @@ const renderMonster = () => {
     if (!activeMonster) return;
   }
 
-
-
-  const monsterName = document.getElementById("monster-name");
-  const monsterType = document.querySelector(".monster-type");
-  const monsterEnergy = document.querySelector(".energy");
-  const monsterHunger = document.querySelector(".hunger");
-  const monsterHappiness = document.querySelector(".happiness");
-  const monsterImage = document.querySelector(".monster-image");
+  activeMonster.statTimer()
 
   monsterName.value = activeMonster.name
   monsterType.innerHTML = activeMonster.monsterType;
@@ -104,13 +128,7 @@ const renderMonster = () => {
 };
 
 const renderMonsterList = () => {
-  const monsterImage = document.querySelector(".monster-image");
 
-  const monsterSelect = document.getElementById("monster-name");
-  const monsterType = document.querySelector(".monster-type");
-  const noMonsterText = document.querySelector(".no-monster");
-  const statDiv = document.querySelector(".stat-container");
-  const activityButton = document.querySelectorAll('.monster-btn')
   monsterSelect.innerHTML = "";
 
   if (monsterList.length === 0) {
@@ -146,6 +164,7 @@ const renderMonsterList = () => {
   }
 };
 
+// add new monster with constructor
 const addNewMonster = () => {
   const inputValue = document.getElementById("name"); 
 
@@ -177,7 +196,7 @@ const addNewMonster = () => {
 
 };
 
-
+// change monster from list
 const handleChangeMonster = () => {
   const selectedMonsterName = document.getElementById("monster-name").value;
 
@@ -190,11 +209,12 @@ const handleChangeMonster = () => {
   }
 };
 
+// render history log
 const renderLog = () => {
-  const logDiv = document.querySelector(".log");
   logDiv.innerHTML = "";
+
   const reversedArr = logArray.reverse()
-  logArray.forEach((log) => {
+  reversedArr.forEach((log) => {
     
     const logItem = document.createElement("div");
     logItem.classList.add("log-item");
@@ -213,7 +233,7 @@ const renderLog = () => {
     logDiv.appendChild(logItem);
   });
 };
-
+// toggle add new monster popup
 const handleToggle = () => {
   if(!isOpen){
     addCard.style.display = 'flex'
@@ -226,7 +246,8 @@ isOpen = !isOpen
  
 }
 
-const addNewButton = document.querySelector('.add-new')
+
+// Event listeners
 if(overlay){
   overlay.addEventListener('click', handleToggle)
 }
@@ -240,3 +261,4 @@ document
   .addEventListener("change", handleChangeMonster);
 
 renderMonsterList();
+

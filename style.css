@@ -208,4 +208,16 @@ option {
 
 .log-ranaway {
   color: #780000;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px); /* Adjust height of bounce */
+  }
+}
+.monster-image {
+  animation: bounce 2s infinite ease-in-out; /* Adjust speed with duration */
 }/*# sourceMappingURL=style.css.map */
