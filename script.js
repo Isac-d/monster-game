@@ -12,6 +12,7 @@ const feedButton = document.querySelector(".feed-btn");
 const addCard = document.querySelector(".div-add-new-monster-card");
 const overlay = document.querySelector(".overlay");
 const addNewButton = document.querySelector(".add-new");
+const listContainer = document.querySelector('.monster-stats')
 const addbutton = document.querySelector(".add-btn");
 const monsterName = document.getElementById("monster-name");
 const monsterType = document.querySelector(".monster-type");
@@ -23,6 +24,7 @@ const monsterSelect = document.getElementById("monster-name");
 const noMonsterText = document.querySelector(".no-monster");
 const statDiv = document.querySelector(".stat-container");
 const activityButton = document.querySelectorAll(".monster-btn");
+const monsterContainer = document.querySelector('.image-container')
 const logDiv = document.querySelector(".log");
 
 // monster Class
@@ -93,9 +95,12 @@ const deleteMonster = () => {
     logArray.push(`${activeMonster.name} ran away!`);
     monsterList = monsterList.filter((monster) => monster !== activeMonster);
     activeMonster = monsterList.length > 0 ? monsterList[0] : null;
-
-    renderMonsterList();
-    renderLog();
+    monsterContainer.style.filter = 'opacity(0)'
+    setTimeout(() => {
+      monsterContainer.style.filter = 'opacity(100)'
+      renderMonsterList();
+      renderLog();
+    }, 1000);
 
     if (!activeMonster) return;
   }
@@ -104,7 +109,9 @@ const deleteMonster = () => {
 // render monster
 const renderMonster = () => {
   deleteMonster();
-  activeMonster.statTimer();
+  if(activeMonster){
+    activeMonster.statTimer();
+  }
 
   monsterName.value = activeMonster.name;
   monsterType.innerHTML = activeMonster.monsterType;
@@ -166,7 +173,6 @@ const renderMonsterList = () => {
 
 const renderMonsterStats = () => {
 
-  const listContainer = document.querySelector('.monster-stats')
   listContainer.style.filter = monsterList.length < 1 ? 'opacity(0)' : 'opacity(100)';
 
   
