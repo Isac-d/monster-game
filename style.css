@@ -164,9 +164,16 @@ button:hover {
   justify-content: space-between;
 }
 
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .div-add-new-monster-card input {
   height: 40px;
   border: 1px solid black;
+  width: 284px;
 }
 
 .div-add-new-monster-card select {
@@ -252,4 +259,5 @@ option {
 }
 .monster-image {
   animation: bounce 2s infinite ease-in-out; /* Adjust speed with duration */
+  height: 600px;
 } /*# sourceMappingURL=style.css.map */
