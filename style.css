@@ -22,7 +22,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 100vh;
+  height: 100vh;
+  justify-content: center;
 }
 
 img {
