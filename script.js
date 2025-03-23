@@ -42,6 +42,7 @@ class Monster {
     this.energy = Math.max(this.energy - 10, 0);
     logArray.push(`You gave ${this.name} some food!`);
     renderLog();
+    renderMonsterStats()
     renderMonster();
   }
 
@@ -52,6 +53,7 @@ class Monster {
     logArray.push(`${this.name} took a nap!`);
     renderLog();
     renderMonster();
+    renderMonsterStats()
   }
 
   play() {
@@ -60,6 +62,7 @@ class Monster {
     this.energy = Math.max(this.energy - 10, 0);
     logArray.push(`You played with ${this.name}!`);
     renderLog();
+    renderMonsterStats()
     renderMonster();
   }
 
@@ -71,6 +74,7 @@ class Monster {
         this.energy = Math.max(this.energy - 15, 0);
         this.happiness = Math.max(this.happiness - 15, 0);
         renderMonster();
+        renderMonsterStats()
       } else {
         clearInterval(this.interval);
         this.interval = null;
@@ -157,7 +161,34 @@ const renderMonsterList = () => {
       monsterSelect.appendChild(monsterOption);
     });
   }
+  renderMonsterStats()
 };
+
+const renderMonsterStats = () => {
+
+  const listContainer = document.querySelector('.monster-stats')
+  listContainer.style.filter = monsterList.length < 1 ? 'opacity(0)' : 'opacity(100)';
+
+  
+  listContainer.innerHTML = "";
+  monsterList.forEach(monster => {
+    const listDiv = document.createElement('div')
+    listDiv.classList.add('monster-stat')
+    listContainer.appendChild(listDiv)
+    
+    const monsterName = document.createElement('div')
+    monsterName.classList.add('monster-stat-name')
+    monsterName.innerHTML = monster.name
+
+    const monsterValues = document.createElement('div')
+    monsterValues.classList.add('monster-stat-values')
+    monsterValues.innerHTML = `${monster.energy}/${monster.happiness}/${monster.fullness}`
+
+    listDiv.appendChild(monsterName)
+    listDiv.appendChild(monsterValues)
+    
+  });
+}
 
 // add new monster with constructor
 const addNewMonster = () => {
@@ -184,6 +215,7 @@ const addNewMonster = () => {
   isOpen = false;
 
   renderMonsterList();
+  renderMonsterStats()
   renderMonster();
 
   addCard.style.display = "none";

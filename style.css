@@ -98,10 +98,39 @@ button:hover {
   margin-right: 90px;
   display: flex;
   flex-direction: column;
-  position: absolute;
   bottom: 0;
   right: 0;
   gap: 10px;
+}
+
+.sidebar {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  width: -moz-fit-content;
+  width: fit-content;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  justify-content: space-between;
+}
+
+.monster-stats {
+  margin-top: 150px;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 300px;
+  background: rgba(243, 243, 243, 0.4392156863);
+  border: 1px solid black;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.monster-stat {
+  display: flex;
+  justify-content: space-between;
 }
 
 .log {
@@ -134,15 +163,18 @@ button:hover {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .div-add-new-monster-card input {
   height: 40px;
   border: 1px solid black;
 }
+
 .div-add-new-monster-card select {
   height: 40px;
   border: 1px solid black;
   width: 284px;
 }
+
 .div-add-new-monster-card h3 {
   text-align: center;
 }
@@ -220,4 +252,4 @@ option {
 }
 .monster-image {
   animation: bounce 2s infinite ease-in-out; /* Adjust speed with duration */
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */
