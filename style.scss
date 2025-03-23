@@ -71,6 +71,20 @@
     position: relative;
     transition: all 500ms;
   }
+
+  .floating-number {
+    position: absolute;
+    font-weight: bold;
+    transition: all 1s ease;
+    z-index: 1000;
+    pointer-events: none;
+  }
+  .floating-number.increase {
+    color: #28a745;
+  }
+  .floating-number.decrease {
+    color: #dc3545;
+  }
   
   .monster-btn {
     height: 80px;

@@ -27,6 +27,8 @@ const activityButton = document.querySelectorAll(".monster-btn");
 const monsterContainer = document.querySelector('.image-container')
 const logDiv = document.querySelector(".log");
 
+
+
 // monster Class
 class Monster {
   constructor(name, monsterType) {
@@ -39,9 +41,19 @@ class Monster {
   }
 
   feed() {
+    const oldFullness = this.fullness;
+    const oldHappiness = this.happiness;
+    const oldEnergy = this.energy;
+    
     this.fullness = Math.min(this.fullness + 30, 100);
     this.happiness = Math.min(this.happiness + 5, 100);
     this.energy = Math.max(this.energy - 10, 0);
+    
+    // Show floating numbers for stat changes
+    showStatChange(monsterHunger, this.fullness - oldFullness);
+    showStatChange(monsterHappiness, this.happiness - oldHappiness);
+    showStatChange(monsterEnergy, this.energy - oldEnergy);
+    
     logArray.push(`You gave ${this.name} some food!`);
     renderLog();
     renderMonsterStats()
@@ -49,9 +61,19 @@ class Monster {
   }
 
   rest() {
+    const oldFullness = this.fullness;
+    const oldHappiness = this.happiness;
+    const oldEnergy = this.energy;
+    
     this.fullness = Math.max(this.fullness - 10, 0);
     this.happiness = Math.max(this.happiness - 10, 0);
     this.energy = Math.min(this.energy + 40, 100);
+    
+    // Show floating numbers for stat changes
+    showStatChange(monsterHunger, this.fullness - oldFullness);
+    showStatChange(monsterHappiness, this.happiness - oldHappiness);
+    showStatChange(monsterEnergy, this.energy - oldEnergy);
+    
     logArray.push(`${this.name} took a nap!`);
     renderLog();
     renderMonster();
@@ -59,9 +81,18 @@ class Monster {
   }
 
   play() {
+    const oldFullness = this.fullness;
+    const oldHappiness = this.happiness;
+    const oldEnergy = this.energy;
+    
     this.fullness = Math.max(this.fullness - 10, 0);
     this.happiness = Math.min(this.happiness + 30, 100);
     this.energy = Math.max(this.energy - 10, 0);
+    
+    showStatChange(monsterHunger, this.fullness - oldFullness);
+    showStatChange(monsterHappiness, this.happiness - oldHappiness);
+    showStatChange(monsterEnergy, this.energy - oldEnergy);
+    
     logArray.push(`You played with ${this.name}!`);
     renderLog();
     renderMonsterStats()
@@ -72,9 +103,21 @@ class Monster {
     if (this.interval) return;
     this.interval = setInterval(() => {
       if (this.fullness > 0 || this.energy > 0 || this.happiness > 0) {
+        const oldFullness = this.fullness;
+        const oldHappiness = this.happiness;
+        const oldEnergy = this.energy;
+        
         this.fullness = Math.max(this.fullness - 15, 0);
         this.energy = Math.max(this.energy - 15, 0);
         this.happiness = Math.max(this.happiness - 15, 0);
+        
+        // Only show floating numbers if this monster is the active one
+        if (this === activeMonster) {
+          showStatChange(monsterHunger, this.fullness - oldFullness);
+          showStatChange(monsterHappiness, this.happiness - oldHappiness);
+          showStatChange(monsterEnergy, this.energy - oldEnergy);
+        }
+        
         renderMonster();
         renderMonsterStats()
       } else {
@@ -101,8 +144,8 @@ const deleteMonster = () => {
       monsterList = monsterList.filter((monster) => monster !== activeMonster);
       activeMonster = monsterList.length > 0 ? monsterList[0] : null;
       renderMonster()
-      renderLog();
       renderMonsterList();
+      renderMonsterStats();
       renderLog();
 
       monsterContainer.style.filter = 'opacity(100)'
@@ -118,14 +161,12 @@ const renderMonster = () => {
   deleteMonster();
   if (!activeMonster) return;
   
-
   monsterName.value = activeMonster.name;
   monsterType.innerHTML = activeMonster.monsterType;
   monsterEnergy.innerHTML = activeMonster.energy;
   monsterHunger.innerHTML = activeMonster.fullness;
   monsterHappiness.innerHTML = activeMonster.happiness;
   
-
   let type = activeMonster.monsterType.toLowerCase();
   if (monsterList.length == 0) {
     monsterImage.src =
@@ -219,14 +260,12 @@ const addNewMonster = () => {
     alert("Name cannot be empty");
     return;
   }
-
+  
   let newMonster = new Monster(monsterName, monsterType);
-  if(activeMonster){
-    activeMonster.statTimer();
-  }
-
+  newMonster.statTimer(); 
   monsterList.push(newMonster);
-  activeMonster = monsterList[monsterList.length - 1];
+  activeMonster = newMonster; 
+  
 
   inputValue.value = "";
   isOpen = false;
@@ -298,6 +337,38 @@ const handleToggle = () => {
   isOpen = !isOpen;
 };
 
+// function to show floating number when stat changes
+const showStatChange = (element, value) => {
+  const floatingNumber = document.createElement('div');
+  floatingNumber.classList.add('floating-number');
+  
+  if (value > 0) {
+    floatingNumber.classList.add('increase');
+    floatingNumber.innerText = `+${value}`;
+  } else {
+    floatingNumber.classList.add('decrease');
+    floatingNumber.innerText = value;
+  }
+  
+  // get the position of stat element
+  const rect = element.getBoundingClientRect();
+
+  floatingNumber.style.position = 'absolute';
+  floatingNumber.style.left = `${rect.left + rect.width / 2}px`;
+  floatingNumber.style.top = `${rect.top - 20}px`;
+  
+  document.body.appendChild(floatingNumber);
+  
+  setTimeout(() => {
+    floatingNumber.style.top = `${rect.top - 50}px`;
+    floatingNumber.style.opacity = '0';
+  }, 50);
+  
+  setTimeout(() => {
+    document.body.removeChild(floatingNumber);
+  }, 1000);
+};
+
 // Event listeners
 if (overlay) {
   overlay.addEventListener("click", handleToggle);
@@ -310,5 +381,6 @@ addbutton.addEventListener("click", addNewMonster);
 document
   .getElementById("monster-name")
   .addEventListener("change", handleChangeMonster);
+
 
 renderMonsterList();
