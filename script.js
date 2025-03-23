@@ -87,6 +87,7 @@ class Monster {
 
 // delete monster
 const deleteMonster = () => {
+  if (!activeMonster) return;
   if (
     activeMonster.energy <= 0 ||
     activeMonster.happiness <= 0 ||
@@ -102,16 +103,14 @@ const deleteMonster = () => {
       renderLog();
     }, 1000);
 
-    if (!activeMonster) return;
   }
 };
 
 // render monster
 const renderMonster = () => {
   deleteMonster();
-  if(activeMonster){
-    activeMonster.statTimer();
-  }
+  if (!activeMonster) return;
+  
 
   monsterName.value = activeMonster.name;
   monsterType.innerHTML = activeMonster.monsterType;
@@ -214,6 +213,8 @@ const addNewMonster = () => {
   }
 
   let newMonster = new Monster(monsterName, monsterType);
+  activeMonster.statTimer();
+
   monsterList.push(newMonster);
   activeMonster = monsterList[monsterList.length - 1];
 
