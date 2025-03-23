@@ -94,17 +94,24 @@ const deleteMonster = () => {
     activeMonster.fullness <= 0
   ) {
     logArray.push(`${activeMonster.name} ran away!`);
-    monsterList = monsterList.filter((monster) => monster !== activeMonster);
-    activeMonster = monsterList.length > 0 ? monsterList[0] : null;
     monsterContainer.style.filter = 'opacity(0)'
+
     setTimeout(() => {
-      monsterContainer.style.filter = 'opacity(100)'
+            
+      monsterList = monsterList.filter((monster) => monster !== activeMonster);
+      activeMonster = monsterList.length > 0 ? monsterList[0] : null;
+      renderMonster()
+      renderLog();
       renderMonsterList();
       renderLog();
-    }, 1000);
+
+      monsterContainer.style.filter = 'opacity(100)'
+      
+    }, 500);
 
   }
 };
+
 
 // render monster
 const renderMonster = () => {
@@ -117,20 +124,21 @@ const renderMonster = () => {
   monsterEnergy.innerHTML = activeMonster.energy;
   monsterHunger.innerHTML = activeMonster.fullness;
   monsterHappiness.innerHTML = activeMonster.happiness;
+  
 
   let type = activeMonster.monsterType.toLowerCase();
   if (monsterList.length == 0) {
     monsterImage.src =
       "images/dcxehfe-dd22d80d-4cff-49bf-be56-bb51f5ea0a78.gif";
   } else {
-    monsterImage.src =
-      type === "dragon"
-        ? "images/dragon.png"
-        : type === "golem"
-        ? "images/golem.png"
-        : type === "troll"
-        ? "images/troll.png"
-        : "images/unknown.png";
+      monsterImage.src =
+        type === "dragon"
+          ? "images/dragon.png"
+          : type === "golem"
+          ? "images/golem.png"
+          : type === "troll"
+          ? "images/troll.png"
+          : "images/unknown.png";
   }
 };
 
@@ -213,7 +221,9 @@ const addNewMonster = () => {
   }
 
   let newMonster = new Monster(monsterName, monsterType);
-  activeMonster.statTimer();
+  if(activeMonster){
+    activeMonster.statTimer();
+  }
 
   monsterList.push(newMonster);
   activeMonster = monsterList[monsterList.length - 1];
@@ -221,9 +231,13 @@ const addNewMonster = () => {
   inputValue.value = "";
   isOpen = false;
 
-  renderMonsterList();
-  renderMonsterStats()
-  renderMonster();
+  monsterContainer.style.filter = "opacity(0)";
+    setTimeout(() => {
+    monsterContainer.style.filter = "opacity(100)";
+      renderMonsterList();
+      renderMonsterStats()
+      renderMonster();
+    }, 500); 
 
   addCard.style.display = "none";
   overlay.style.display = "none";
@@ -238,7 +252,14 @@ const handleChangeMonster = () => {
   );
 
   if (activeMonster) {
-    renderMonster();
+    monsterContainer.style.filter = "opacity(0)";
+    setTimeout(() => {
+    monsterContainer.style.filter = "opacity(100)";
+
+      renderMonster();
+      activeMonster.statTimer();
+    }, 500); 
+
   }
 };
 
